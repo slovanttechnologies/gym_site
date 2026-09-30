@@ -1,0 +1,2990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ironwork® — built in iron + discipline</title>
+  <meta name="description" content="strength and conditioning training archive. heavy weights, honest work.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & RESET
+       ========================================================================== */
+    :root {
+      --bg: #16181a;
+      --bg-surface: #1b1e21;
+      --text: #f2f0ec;
+      --text-muted: rgba(242, 240, 236, 0.6);
+      --text-faint: rgba(242, 240, 236, 0.35);
+      --hairline: rgba(242, 240, 236, 0.16);
+      --hairline-strong: rgba(242, 240, 236, 0.35);
+      --accent: #ff5a1f; /* ember - used ONLY for popular tag, focus underline, few spots marker */
+      --font-main: 'Archivo', sans-serif;
+      --section-pad-y: 120px;
+      --section-pad-x: 64px;
+      --content-max-w: 1400px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s ease, opacity 0.2s ease;
+      cursor: pointer;
+    }
+
+    a:hover {
+      color: #ffffff;
+    }
+
+    button {
+      font-family: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    *:focus-visible {
+      outline: 2px solid var(--text);
+      outline-offset: 3px;
+    }
+
+    /* Section anchors */
+    section {
+      scroll-margin-top: 80px;
+    }
+
+    .container {
+      max-width: var(--content-max-w);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .section-wrapper {
+      padding: var(--section-pad-y) var(--section-pad-x);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .section-label {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      text-transform: lowercase;
+    }
+
+    .section-title {
+      font-size: clamp(40px, 5.5vw, 80px);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      text-transform: lowercase;
+      margin-bottom: 64px;
+    }
+
+    /* ==========================================================================
+       PERSISTENT FLOATING HEADER (USER-FRIENDLY NAVIGATION)
+       ========================================================================== */
+    .floating-header {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      z-index: 1000;
+      width: calc(100% - 48px);
+      max-width: 900px;
+      background-color: rgba(22, 24, 26, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--hairline-strong);
+      border-radius: 999px;
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .floating-header.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .float-brand {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .float-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .float-nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      text-transform: lowercase;
+    }
+
+    .float-nav-link:hover, .float-nav-link.active {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .float-btn-join {
+      background: var(--text);
+      color: var(--bg);
+      border: 1px solid var(--text);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: 13.5px;
+      font-weight: 500;
+      text-decoration: none;
+      text-transform: lowercase;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .float-btn-join:hover {
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    /* ==========================================================================
+       HERO SECTION (EXACT ORIGINAL PRESERVED)
+       ========================================================================== */
+    .hero-section {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      height: 100svh;
+      overflow: hidden;
+      background-color: #16181a;
+      user-select: none;
+    }
+
+    /* Background image stack (4 absolute layers) */
+    .hero-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: translateZ(0);
+    }
+
+    /* 1. Clean portrait */
+    .clean-layer {
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      z-index: 0;
+    }
+
+    /* 2. Power layer at 10% */
+    .power-base-layer {
+      opacity: 0.1;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      z-index: 1;
+    }
+
+    /* 3. Power reveal layer */
+    .power-reveal-layer {
+      opacity: 0;
+      transition: opacity 0.4s ease-out;
+      will-change: opacity;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      z-index: 2;
+      -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+      mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: 110px 140px;
+      mask-size: 110px 140px;
+    }
+
+    /* 4. Scrim */
+    .scrim-layer {
+      background: linear-gradient(180deg, rgba(16, 18, 20, 0.55) 0%, rgba(16, 18, 20, 0.12) 45%, rgba(16, 18, 20, 0.6) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Content overlay */
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 44px 64px 40px;
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       TOP BAR (STEP 2 UPDATED)
+       ========================================================================== */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #f2f0ec;
+      line-height: 1;
+    }
+
+    .top-left {
+      display: flex;
+      align-items: baseline;
+      gap: 28px;
+    }
+
+    .gym-brand {
+      letter-spacing: 0.02em;
+    }
+
+    .hero-nav-links {
+      display: flex;
+      align-items: baseline;
+      gap: 28px;
+    }
+
+    .hero-nav-link {
+      color: #f2f0ec;
+      text-decoration: none;
+      pointer-events: auto;
+      transition: color 0.2s ease, text-decoration 0.2s ease;
+    }
+
+    .hero-nav-link:hover {
+      color: #ffffff;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .top-center-pill {
+      border: 1.5px solid #f2f0ec;
+      border-radius: 999px;
+      padding: 4px 20px;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .top-right {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+    }
+
+    .btn-join-hero {
+      display: inline-block;
+      pointer-events: auto;
+      background: transparent;
+      border: 1.5px solid #f2f0ec;
+      border-radius: 999px;
+      padding: 8px 22px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #f2f0ec;
+      text-decoration: none;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-join-hero:hover {
+      background-color: #f2f0ec;
+      color: #16181a;
+      text-decoration: none;
+    }
+
+    /* Mobile menu trigger */
+    .mobile-menu-btn {
+      display: none;
+      pointer-events: auto;
+      font-size: 16px;
+      font-weight: 500;
+      color: #f2f0ec;
+      text-decoration: none;
+      padding: 4px 0;
+    }
+
+    .mobile-menu-btn:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Mobile full-screen overlay */
+    .mobile-nav-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: #16181a;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 32px 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-nav-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mobile-close-btn {
+      font-size: 16px;
+      font-weight: 500;
+      color: #f2f0ec;
+      padding: 6px 14px;
+      border: 1.5px solid var(--text);
+      border-radius: 999px;
+    }
+
+    .mobile-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .mobile-nav-item {
+      font-size: 40px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: #f2f0ec;
+      text-decoration: none;
+      text-transform: lowercase;
+    }
+
+    .mobile-nav-item:hover {
+      color: #ffffff;
+      text-decoration: underline;
+      text-underline-offset: 6px;
+    }
+
+    /* Headline */
+    .hero-headline {
+      margin-top: 40px;
+      font-size: clamp(52px, 7.4vw, 104px);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 0.98;
+      text-transform: lowercase;
+      text-align: left;
+      color: #f2f0ec;
+    }
+
+    .headline-line {
+      display: block;
+    }
+
+    .headline-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* Circled '+' glyph */
+    .circle-plus-glyph {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 0.8em;
+      height: 0.8em;
+      border: 1.5px solid #f2f0ec;
+      border-radius: 50%;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+
+    .circle-plus-glyph span {
+      font-size: 0.45em;
+      font-weight: 400;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateY(-0.02em);
+    }
+
+    /* Bottom row */
+    .bottom-row {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 48px;
+    }
+
+    .bottom-left-hours {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.45;
+      color: #f2f0ec;
+      white-space: nowrap;
+    }
+
+    .bottom-right-block {
+      max-width: 560px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bottom-paragraph {
+      font-size: 15.5px;
+      line-height: 1.6;
+      word-spacing: 0.15em;
+      text-align: justify;
+      color: #f2f0ec;
+      font-weight: 400;
+    }
+
+    .bottom-meta-row {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      color: #f2f0ec;
+      font-weight: 400;
+    }
+
+    /* ==========================================================================
+       SECTION 1: MARQUEE STRIP
+       ========================================================================== */
+    .marquee-strip {
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      overflow: hidden;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      padding: 22px 0;
+      background-color: var(--bg);
+      user-select: none;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 28s linear infinite;
+    }
+
+    .marquee-strip:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    .marquee-item {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      text-transform: lowercase;
+      color: var(--text);
+      padding-right: 28px;
+    }
+
+    @keyframes marqueeScroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* ==========================================================================
+       SECTION 2: CLASSES & WEEKLY SCHEDULE
+       ========================================================================== */
+    .schedule-controls-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--hairline);
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .schedule-tabs {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .schedule-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      padding: 12px 6px;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      text-transform: lowercase;
+      transition: color 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+    }
+
+    .tab-btn.active {
+      color: var(--text);
+      border-bottom-color: var(--text);
+    }
+
+    .today-tag {
+      font-size: 11px;
+      padding: 1px 7px;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+
+    .class-category-filters {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+
+    .category-filter-btn {
+      font-size: 13px;
+      padding: 4px 12px;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      text-transform: lowercase;
+      white-space: nowrap;
+    }
+
+    .category-filter-btn:hover, .category-filter-btn.active {
+      border-color: var(--text);
+      color: var(--text);
+      background: rgba(242, 240, 236, 0.08);
+    }
+
+    .schedule-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 140px 1.8fr 1.2fr 100px 80px;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--hairline);
+      transition: transform 0.3s ease, background-color 0.2s ease;
+      position: relative;
+    }
+
+    .schedule-row:hover {
+      transform: translateX(12px);
+    }
+
+    .class-time {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .class-name-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .class-name {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      text-transform: lowercase;
+    }
+
+    .spot-tag {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent); /* Ember #ff5a1f */
+      letter-spacing: 0.02em;
+      text-transform: lowercase;
+    }
+
+    .class-coach {
+      font-size: 16px;
+      color: var(--text-muted);
+      text-transform: lowercase;
+    }
+
+    .class-duration {
+      font-size: 16px;
+      color: var(--text-muted);
+      text-transform: lowercase;
+    }
+
+    .class-book-btn {
+      text-align: right;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-transform: lowercase;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+      transition: color 0.2s ease;
+    }
+
+    .class-book-btn:hover {
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       SECTION 3: TRAINERS
+       ========================================================================== */
+    .trainers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    .trainer-card {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .trainer-image-wrap {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      background-color: #24272a;
+      overflow: hidden;
+      margin-bottom: 20px;
+      position: relative;
+      border: 1px solid var(--hairline);
+    }
+
+    .trainer-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%);
+      transition: filter 0.4s ease, transform 0.4s ease;
+      display: block;
+    }
+
+    .trainer-placeholder-initials {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: 500;
+      color: var(--text-muted);
+      opacity: 0.4;
+      transition: opacity 0.3s ease;
+    }
+
+    .trainer-card:hover .trainer-image,
+    .trainer-card.touch-active .trainer-image {
+      filter: grayscale(0%);
+      transform: scale(1.02);
+    }
+
+    .trainer-card:hover .trainer-placeholder-initials,
+    .trainer-card.touch-active .trainer-placeholder-initials {
+      opacity: 0.8;
+    }
+
+    .trainer-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .trainer-name {
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-transform: lowercase;
+    }
+
+    .trainer-spec {
+      font-size: 15px;
+      color: var(--text-muted);
+      text-transform: lowercase;
+    }
+
+    .trainer-exp {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-transform: lowercase;
+    }
+
+    .trainer-bio {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text);
+      text-transform: lowercase;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transform: translateY(8px);
+      transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .trainer-card:hover .trainer-bio,
+    .trainer-card.touch-active .trainer-bio {
+      max-height: 100px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       SECTION 4: MEMBERSHIP PLANS
+       ========================================================================== */
+    .pricing-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+    }
+
+    .billing-toggle-pill {
+      display: inline-flex;
+      border: 1.5px solid var(--text);
+      border-radius: 999px;
+      padding: 4px;
+      background: transparent;
+      position: relative;
+    }
+
+    .toggle-opt {
+      padding: 6px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 999px;
+      color: var(--text-muted);
+      transition: background-color 0.2s ease, color 0.2s ease;
+      text-transform: lowercase;
+    }
+
+    .toggle-opt.active {
+      background-color: var(--text);
+      color: var(--bg);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .plan-column {
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: background-color 0.25s ease;
+    }
+
+    .plan-column:hover {
+      background-color: rgba(242, 240, 236, 0.02);
+    }
+
+    .plan-column:not(:last-child) {
+      border-right: 1px solid var(--hairline);
+    }
+
+    .plan-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .plan-name {
+      font-size: 24px;
+      font-weight: 500;
+      text-transform: lowercase;
+      letter-spacing: -0.01em;
+    }
+
+    .popular-tag {
+      background-color: var(--accent); /* Ember #ff5a1f */
+      color: var(--bg);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 3px 12px;
+      border-radius: 999px;
+      text-transform: lowercase;
+    }
+
+    .plan-price-wrap {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .plan-price {
+      font-size: 64px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .plan-price-period {
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    .plan-billing-note {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      text-transform: lowercase;
+    }
+
+    .plan-features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 48px;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .plan-feature-item {
+      padding: 16px 0;
+      font-size: 15px;
+      line-height: 1.4;
+      color: var(--text);
+      border-bottom: 1px solid var(--hairline);
+      text-transform: lowercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .plan-feature-bullet {
+      width: 4px;
+      height: 4px;
+      background: var(--text-faint);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .plan-btn {
+      margin-top: auto;
+      width: 100%;
+      border: 1.5px solid var(--text);
+      border-radius: 999px;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      background: transparent;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .plan-btn:hover {
+      background-color: var(--text);
+      color: var(--bg);
+      text-decoration: none;
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       SECTION 5: MEMBER RESULTS (TESTIMONIALS)
+       ========================================================================== */
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 40px;
+    }
+
+    .results-nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .carousel-indicator {
+      font-size: 14px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .results-nav-btn {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      padding: 6px 12px;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .results-nav-btn:hover {
+      color: #ffffff;
+      transform: scale(1.1);
+    }
+
+    .results-carousel {
+      display: flex;
+      gap: 32px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 24px;
+      scrollbar-width: none;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .results-carousel:active {
+      cursor: grabbing;
+    }
+
+    .results-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .quote-card {
+      flex: 0 0 420px;
+      scroll-snap-align: start;
+      border: 1px solid var(--hairline);
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 280px;
+      background-color: rgba(22, 24, 26, 0.4);
+      transition: border-color 0.25s ease;
+    }
+
+    .quote-card:hover {
+      border-color: var(--hairline-strong);
+    }
+
+    .quote-text {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      text-transform: lowercase;
+      color: var(--text);
+    }
+
+    .quote-meta {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-top: 1px solid var(--hairline);
+      padding-top: 18px;
+    }
+
+    .quote-name {
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: lowercase;
+    }
+
+    .quote-result {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-transform: lowercase;
+    }
+
+    /* Carousel dots */
+    .carousel-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .carousel-dot {
+      width: 24px;
+      height: 2px;
+      background-color: var(--hairline);
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+    }
+
+    .carousel-dot.active {
+      background-color: var(--text);
+    }
+
+    /* ==========================================================================
+       SECTION 6: FREE TRIAL FORM
+       ========================================================================== */
+    .trial-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+    }
+
+    .trial-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .trial-desc {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 440px;
+      text-transform: lowercase;
+      margin-bottom: 32px;
+    }
+
+    /* Intent preview badge */
+    .selected-intent-card {
+      display: none;
+      border: 1px solid var(--hairline-strong);
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      background: rgba(255, 90, 31, 0.05);
+      border-left: 3px solid var(--accent);
+    }
+
+    .selected-intent-card.visible {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .intent-label {
+      font-size: 12px;
+      color: var(--accent);
+      text-transform: lowercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+
+    .intent-val {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      text-transform: lowercase;
+    }
+
+    .intent-clear-btn {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: underline;
+    }
+
+    .intent-clear-btn:hover {
+      color: var(--text);
+    }
+
+    .trial-form {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .form-label {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-transform: lowercase;
+      letter-spacing: 0.02em;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--hairline);
+      padding: 12px 0;
+      font-size: 18px;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+      border-radius: 0;
+      transition: border-bottom-color 0.2s ease;
+      text-transform: lowercase;
+    }
+
+    .form-select {
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23f2f0ec' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      background-size: 10px;
+    }
+
+    .form-select option {
+      background-color: #16181a;
+      color: #f2f0ec;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-bottom-color: var(--accent); /* Ember #ff5a1f */
+    }
+
+    .form-error {
+      font-size: 12px;
+      color: var(--accent);
+      margin-top: 6px;
+      text-transform: lowercase;
+      min-height: 16px;
+    }
+
+    .honeypot-field {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .btn-submit-trial {
+      width: 100%;
+      border: 1.5px solid var(--text);
+      border-radius: 999px;
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      background: transparent;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      text-transform: lowercase;
+      margin-top: 8px;
+    }
+
+    .btn-submit-trial:hover {
+      background-color: var(--text);
+      color: var(--bg);
+      transform: translateY(-2px);
+    }
+
+    .or-divider {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-faint);
+      margin: 8px 0;
+      text-transform: lowercase;
+    }
+
+    .btn-whatsapp-direct {
+      width: 100%;
+      border: 1px solid var(--hairline-strong);
+      border-radius: 999px;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      text-transform: lowercase;
+    }
+
+    .btn-whatsapp-direct:hover {
+      color: var(--text);
+      border-color: var(--text);
+      text-decoration: none;
+    }
+
+    .form-confirmation {
+      padding: 48px;
+      border: 1px solid var(--hairline);
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.4;
+      text-transform: lowercase;
+      color: var(--text);
+      display: none;
+      background: rgba(242, 240, 236, 0.02);
+    }
+
+    /* ==========================================================================
+       SECTION 7: LOCATION AND HOURS
+       ========================================================================== */
+    .location-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+    }
+
+    .location-details {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .contact-item-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .contact-label {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-transform: lowercase;
+    }
+
+    .contact-val {
+      font-size: 18px;
+      line-height: 1.4;
+      color: var(--text);
+      text-transform: lowercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .copy-address-btn {
+      font-size: 12px;
+      padding: 2px 10px;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .copy-address-btn:hover {
+      color: var(--text);
+      border-color: var(--text);
+    }
+
+    .hours-block {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hours-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .status-pill {
+      border: 1.5px solid var(--text);
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: lowercase;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #22c55e; /* Green for open */
+      display: inline-block;
+    }
+
+    .status-pill.closed .status-dot {
+      background-color: var(--text-faint);
+    }
+
+    .status-pill.closed {
+      color: var(--text-muted);
+      border-color: var(--hairline-strong);
+    }
+
+    .hours-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--hairline);
+      font-size: 16px;
+      color: var(--text-muted);
+      text-transform: lowercase;
+      transition: color 0.2s ease, border-left 0.2s ease;
+    }
+
+    .hours-row.today {
+      color: var(--text);
+      font-weight: 500;
+      border-left: 2px solid var(--accent); /* Ember mark for today */
+      padding-left: 12px;
+    }
+
+    .map-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .map-frame {
+      width: 100%;
+      height: 340px;
+      border: 1px solid var(--hairline);
+      filter: grayscale(100%) invert(90%) contrast(85%);
+      background-color: #1f2225;
+    }
+
+    .map-links-row {
+      display: flex;
+      gap: 24px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       SECTION 8: FOOTER
+       ========================================================================== */
+    .site-footer {
+      border-top: 1px solid var(--hairline);
+      padding: 48px var(--section-pad-x);
+    }
+
+    .footer-inner {
+      max-width: var(--content-max-w);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .footer-nav {
+      display: flex;
+      align-items: baseline;
+      gap: 28px;
+    }
+
+    .footer-nav a {
+      font-size: 15px;
+      font-weight: 500;
+      text-transform: lowercase;
+      text-decoration: none;
+    }
+
+    .footer-nav a:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+    }
+
+    .footer-social-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-social-links a {
+      font-size: 15px;
+      text-transform: lowercase;
+      text-decoration: none;
+    }
+
+    .footer-social-links a:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .back-to-top-link {
+      font-size: 15px;
+      font-weight: 500;
+      text-transform: lowercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .back-to-top-link:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ==========================================================================
+       SCROLL-REVEAL ANIMATIONS (NEW SECTIONS ONLY)
+       ========================================================================== */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      will-change: opacity, transform;
+    }
+
+    .reveal-item.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-item {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+
+      .marquee-track {
+        animation: none !important;
+      }
+
+      html {
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS (1440, 1024, 768, 390px)
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      :root {
+        --section-pad-x: 40px;
+        --section-pad-y: 96px;
+      }
+
+      .hero-content {
+        padding: 36px 40px 32px;
+      }
+
+      .trainers-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .plan-column:not(:last-child) {
+        border-right: none;
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .trial-layout, .location-layout {
+        gap: 48px;
+      }
+
+      .schedule-row {
+        grid-template-columns: 110px 1.5fr 1fr 80px 60px;
+        font-size: 15px;
+      }
+
+      .class-name {
+        font-size: 22px;
+      }
+
+      .floating-header {
+        max-width: calc(100% - 48px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --section-pad-x: 24px;
+        --section-pad-y: 72px;
+      }
+
+      .hero-content {
+        padding: 28px 24px 24px;
+      }
+
+      .hero-nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .top-center-pill {
+        display: none;
+      }
+
+      .bottom-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 28px;
+      }
+
+      .bottom-right-block {
+        max-width: 100%;
+      }
+
+      .bottom-paragraph {
+        text-align: left;
+      }
+
+      .schedule-row {
+        grid-template-columns: 90px 1fr 70px;
+        gap: 12px;
+      }
+
+      .class-coach, .class-duration {
+        display: none;
+      }
+
+      .trial-layout, .location-layout {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 28px;
+      }
+
+      .footer-nav {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .footer-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .floating-header .float-nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .trainers-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quote-card {
+        flex: 0 0 300px;
+        padding: 28px 24px;
+      }
+
+      .pricing-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .plan-column {
+        padding: 36px 20px;
+      }
+
+      .plan-price {
+        font-size: 52px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       PERSISTENT FLOATING HEADER ON SCROLL
+       ========================================================================== -->
+  <header id="floating-header" class="floating-header" aria-label="Quick navigation">
+    <a href="#hero" class="float-brand">ironwork®</a>
+    <nav class="float-nav-links">
+      <a href="#classes" class="float-nav-link">classes</a>
+      <a href="#trainers" class="float-nav-link">trainers</a>
+      <a href="#pricing" class="float-nav-link">pricing</a>
+      <a href="#contact" class="float-nav-link">contact</a>
+    </nav>
+    <a href="#contact" class="float-btn-join">join now ↗</a>
+  </header>
+
+  <!-- ==========================================================================
+       HERO SECTION (EXACT PRESERVED LOGIC + UPDATED TOP BAR)
+       ========================================================================== -->
+  <section id="hero" class="hero-section">
+    <!-- 1. Clean portrait -->
+    <img
+      src="clean-portrait.jpg"
+      alt="clean portrait"
+      class="hero-layer clean-layer"
+      draggable="false"
+    >
+
+    <!-- 2. Power layer at 10% -->
+    <img
+      src="power-portrait.jpg"
+      alt="power portrait base"
+      class="hero-layer power-base-layer"
+      draggable="false"
+    >
+
+    <!-- 3. Power reveal layer -->
+    <img
+      id="power-reveal"
+      src="power-portrait.jpg"
+      alt="power portrait reveal"
+      class="hero-layer power-reveal-layer"
+      draggable="false"
+    >
+
+    <!-- 4. Scrim -->
+    <div class="hero-layer scrim-layer"></div>
+
+    <!-- Content overlay -->
+    <div class="hero-content">
+      <!-- Top bar (Step 2 update) -->
+      <header class="top-bar">
+        <div class="top-left">
+          <span class="gym-brand">ironwork®</span>
+          <nav class="hero-nav-links" aria-label="Primary navigation">
+            <a href="#classes" class="hero-nav-link">classes</a>
+            <a href="#trainers" class="hero-nav-link">trainers</a>
+            <a href="#pricing" class="hero-nav-link">pricing</a>
+            <a href="#contact" class="hero-nav-link">contact</a>
+          </nav>
+          <button id="mobile-menu-trigger" class="mobile-menu-btn" aria-label="Open navigation menu">menu</button>
+        </div>
+
+        <div class="top-center-pill">
+          <span>©2026</span>
+        </div>
+
+        <div class="top-right">
+          <a href="#contact" class="btn-join-hero">join now ↗</a>
+        </div>
+      </header>
+
+      <!-- Headline -->
+      <h1 class="hero-headline">
+        <span class="headline-line">built in iron</span>
+        <span class="headline-line headline-row">
+          <span class="circle-plus-glyph" aria-hidden="true">
+            <span>+</span>
+          </span>
+          <span>discipline</span>
+        </span>
+      </h1>
+
+      <!-- Bottom row -->
+      <footer class="bottom-row">
+        <div class="bottom-left-hours">
+          open 5am — midnight
+        </div>
+
+        <div class="bottom-right-block">
+          <p class="bottom-paragraph">
+            heavy weights, honest work. we coach strength and conditioning for people who show up early and leave tired — where effort becomes the routine and progress does the talking. no shortcuts, no gimmicks: just consistent training, done properly.
+          </p>
+          <div class="bottom-meta-row">
+            <span>memberships — plan 01</span>
+            <span>( scroll ↓ )</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- Mobile Fullscreen Overlay -->
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay" aria-hidden="true">
+    <div class="mobile-nav-header">
+      <span class="gym-brand">ironwork®</span>
+      <button id="mobile-close-trigger" class="mobile-close-btn" aria-label="Close menu">close</button>
+    </div>
+    <nav class="mobile-nav-list" aria-label="Mobile navigation">
+      <a href="#classes" class="mobile-nav-item">classes</a>
+      <a href="#trainers" class="mobile-nav-item">trainers</a>
+      <a href="#pricing" class="mobile-nav-item">pricing</a>
+      <a href="#contact" class="mobile-nav-item">contact</a>
+    </nav>
+    <div>
+      <a href="#contact" class="btn-join-hero mobile-close-action" style="display: inline-block;">join now ↗</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- ==========================================================================
+         SECTION 1: MARQUEE STRIP
+         ========================================================================== -->
+    <div class="marquee-strip" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-item">strength — conditioning — mobility — coaching — community —</span>
+        <span class="marquee-item">strength — conditioning — mobility — coaching — community —</span>
+        <span class="marquee-item">strength — conditioning — mobility — coaching — community —</span>
+        <span class="marquee-item">strength — conditioning — mobility — coaching — community —</span>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         SECTION 2: CLASSES & WEEKLY SCHEDULE
+         ========================================================================== -->
+    <section id="classes" class="section-wrapper">
+      <div class="container">
+        <div class="reveal-group">
+          <p class="section-label reveal-item">( 01 / classes )</p>
+          <h2 class="section-title reveal-item">weekly schedule</h2>
+
+          <!-- Schedule Controls (Day Tabs & Filter Pills) -->
+          <div class="schedule-controls-row reveal-item">
+            <nav id="schedule-tabs" class="schedule-tabs" aria-label="Weekly schedule days"></nav>
+            <div id="class-category-filters" class="class-category-filters" aria-label="Filter classes by category">
+              <button class="category-filter-btn active" data-filter="all">all classes</button>
+              <button class="category-filter-btn" data-filter="lifting">strength</button>
+              <button class="category-filter-btn" data-filter="hiit">conditioning</button>
+              <button class="category-filter-btn" data-filter="boxing">boxing</button>
+              <button class="category-filter-btn" data-filter="mobility">mobility</button>
+            </div>
+          </div>
+
+          <!-- Schedule Rows -->
+          <div id="schedule-rows" class="schedule-list reveal-item" role="region" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 3: TRAINERS
+         ========================================================================== -->
+    <section id="trainers" class="section-wrapper">
+      <div class="container">
+        <div class="reveal-group">
+          <p class="section-label reveal-item">( 02 / trainers )</p>
+          <h2 class="section-title reveal-item">coaching staff</h2>
+
+          <div id="trainers-grid" class="trainers-grid reveal-item"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 4: MEMBERSHIP PLANS
+         ========================================================================== -->
+    <section id="pricing" class="section-wrapper">
+      <div class="container">
+        <div class="reveal-group">
+          <div class="pricing-header-row reveal-item">
+            <div>
+              <p class="section-label">( 03 / pricing )</p>
+              <h2 class="section-title" style="margin-bottom: 0;">membership plans</h2>
+            </div>
+
+            <!-- Monthly / Yearly Toggle -->
+            <div class="billing-toggle-pill" role="group" aria-label="Billing frequency">
+              <button id="toggle-monthly" class="toggle-opt active" aria-pressed="true">monthly</button>
+              <button id="toggle-yearly" class="toggle-opt" aria-pressed="false">yearly (-15%)</button>
+            </div>
+          </div>
+
+          <div id="pricing-grid" class="pricing-grid reveal-item"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 5: MEMBER RESULTS (TESTIMONIALS)
+         ========================================================================== -->
+    <section id="results" class="section-wrapper">
+      <div class="container">
+        <div class="reveal-group">
+          <div class="results-header reveal-item">
+            <div>
+              <p class="section-label">( 04 / results )</p>
+              <h2 class="section-title" style="margin-bottom: 0;">member results</h2>
+            </div>
+            <div class="results-nav-controls">
+              <span id="carousel-indicator" class="carousel-indicator">01 / 05</span>
+              <button id="results-prev" class="results-nav-btn" aria-label="Previous quote">( ← )</button>
+              <button id="results-next" class="results-nav-btn" aria-label="Next quote">( → )</button>
+            </div>
+          </div>
+
+          <div id="results-carousel" class="results-carousel reveal-item" tabindex="0" aria-label="Member quotes carousel"></div>
+          <div id="carousel-dots" class="carousel-dots reveal-item" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 6: FREE TRIAL FORM
+         ========================================================================== -->
+    <section id="contact" class="section-wrapper">
+      <div class="container">
+        <div class="trial-layout reveal-group">
+          <div class="trial-info reveal-item">
+            <p class="section-label">( 05 / contact )</p>
+            <h2 class="section-title">book your free trial</h2>
+            <p class="trial-desc">
+              experience the facility, meet our coaches, and complete an initial movement assessment. no commitment required.
+            </p>
+
+            <!-- Intent feedback badge (shows what the user selected in classes/pricing) -->
+            <div id="selected-intent-card" class="selected-intent-card">
+              <div>
+                <p class="intent-label">selected reservation</p>
+                <p id="intent-val" class="intent-val"></p>
+              </div>
+              <button id="intent-clear-btn" type="button" class="intent-clear-btn" aria-label="Clear selected reservation">remove</button>
+            </div>
+          </div>
+
+          <div class="trial-form-wrap reveal-item">
+            <form id="trial-form" class="trial-form" novalidate>
+              <!-- Honeypot -->
+              <input type="text" name="hp_field" class="honeypot-field" tabindex="-1" autocomplete="off">
+
+              <!-- Full Name -->
+              <div class="form-group">
+                <label for="trial-name" class="form-label">
+                  <span>full name *</span>
+                </label>
+                <input type="text" id="trial-name" name="name" class="form-input" placeholder="e.g. alexander cole" required autocomplete="name">
+                <span class="form-error" id="name-error"></span>
+              </div>
+
+              <!-- Phone -->
+              <div class="form-group">
+                <label for="trial-phone" class="form-label">
+                  <span>phone (10 digits) *</span>
+                </label>
+                <input type="tel" id="trial-phone" name="phone" class="form-input" placeholder="e.g. 555-019-2834" required autocomplete="tel">
+                <span class="form-error" id="phone-error"></span>
+              </div>
+
+              <!-- Email (optional) -->
+              <div class="form-group">
+                <label for="trial-email" class="form-label">
+                  <span>email (optional)</span>
+                </label>
+                <input type="email" id="trial-email" name="email" class="form-input" placeholder="e.g. alexander@ironwork.com" autocomplete="email">
+                <span class="form-error" id="email-error"></span>
+              </div>
+
+              <!-- Goal -->
+              <div class="form-group">
+                <label for="trial-goal" class="form-label">primary goal</label>
+                <select id="trial-goal" name="goal" class="form-select">
+                  <option value="build strength">build strength</option>
+                  <option value="lose fat">lose fat</option>
+                  <option value="improve fitness">improve fitness</option>
+                  <option value="sports performance">sports performance</option>
+                </select>
+                <span class="form-error"></span>
+              </div>
+
+              <!-- Preferred Time -->
+              <div class="form-group">
+                <label for="trial-time" class="form-label">preferred training time</label>
+                <select id="trial-time" name="time" class="form-select">
+                  <option value="early morning 5am — 8am">early morning 5am — 8am</option>
+                  <option value="morning 8am — 12pm">morning 8am — 12pm</option>
+                  <option value="afternoon 12pm — 5pm">afternoon 12pm — 5pm</option>
+                  <option value="evening 5pm — 10pm">evening 5pm — 10pm</option>
+                </select>
+                <span class="form-error"></span>
+              </div>
+
+              <!-- Plan Preference -->
+              <div class="form-group">
+                <label for="trial-plan" class="form-label">interested plan</label>
+                <select id="trial-plan" name="plan" class="form-select">
+                  <option value="not decided">not decided</option>
+                  <option value="basic">basic ($1500/mo)</option>
+                  <option value="performance">performance ($2500/mo)</option>
+                  <option value="elite">elite ($4000/mo)</option>
+                </select>
+                <span class="form-error"></span>
+              </div>
+
+              <button type="submit" id="btn-submit-trial" class="btn-submit-trial">request my free trial ↗</button>
+
+              <div class="or-divider">— or direct chat —</div>
+
+              <a id="btn-whatsapp-chat" href="https://wa.me/15550192834?text=hi%20ironwork,%20i%20would%20like%20to%20inquire%20about%20booking%20a%20free%20trial" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-direct">
+                chat on whatsapp ↗
+              </a>
+            </form>
+
+            <div id="trial-confirmation" class="form-confirmation" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+       SECTION 7: LOCATION AND HOURS
+       ========================================================================== */
+       ========================================================================== -->
+    <section id="location" class="section-wrapper">
+      <div class="container">
+        <div class="location-layout reveal-group">
+          <div class="location-details reveal-item">
+            <div>
+              <p class="section-label">( 06 / location )</p>
+              <h2 class="section-title">location & hours</h2>
+            </div>
+
+            <div class="contact-item-group">
+              <span class="contact-label">facility address</span>
+              <p class="contact-val">
+                <span id="gym-address-text">142 ironwork way, district 4, industrial quarter</span>
+                <button type="button" id="copy-address-btn" class="copy-address-btn" aria-label="Copy address">copy</button>
+              </p>
+            </div>
+
+            <div class="contact-item-group">
+              <span class="contact-label">direct phone</span>
+              <p class="contact-val">
+                <a href="tel:+15550192834" style="text-decoration: none;">+1 (555) 019-2834</a>
+              </p>
+            </div>
+
+            <div class="contact-item-group">
+              <span class="contact-label">inquiries email</span>
+              <p class="contact-val">
+                <a href="mailto:hq@ironworktraining.com" style="text-decoration: none;">hq@ironworktraining.com</a>
+              </p>
+            </div>
+
+            <div class="hours-block">
+              <div class="hours-title-row">
+                <span class="contact-label">operating hours</span>
+                <span id="live-status-pill" class="status-pill open">
+                  <span class="status-dot"></span>
+                  <span id="status-text">open now</span>
+                </span>
+              </div>
+              <div id="hours-list" class="hours-list"></div>
+            </div>
+          </div>
+
+          <div class="map-container reveal-item">
+            <iframe
+              class="map-frame"
+              title="gym location map"
+              loading="lazy"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509374!2d144.9537353153166!3d-37.8162797420217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d1dc0f96860!2sFlinders%20St%2C%20Melbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sus!4v1614000000000!5m2!1sen!2sus"
+            ></iframe>
+            <div class="map-links-row">
+              <a href="https://maps.google.com/?q=142+ironwork+way" target="_blank" rel="noopener noreferrer">get directions ↗</a>
+              <a href="https://wa.me/15550192834?text=hi%20ironwork,%20i%20have%20a%20question%20about%20location%20and%20hours" target="_blank" rel="noopener noreferrer">chat on whatsapp ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       SECTION 8: FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span>ironwork®</span>
+        <span style="color: var(--text-muted);">©2026</span>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#classes">classes</a>
+        <a href="#trainers">trainers</a>
+        <a href="#pricing">pricing</a>
+        <a href="#contact">contact</a>
+      </nav>
+
+      <div class="footer-right">
+        <div class="footer-social-links">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">instagram</a>
+          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">youtube</a>
+          <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer">whatsapp</a>
+        </div>
+        <a href="#hero" class="back-to-top-link">back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       DATA & JAVASCRIPT CONTROLLERS
+       ========================================================================== -->
+  <script>
+    /* ==========================================================================
+       EDITABLE DATA OBJECTS
+       ========================================================================== */
+
+    // 1. Weekly Class Schedule with category tags for filtering
+    const SCHEDULE_DATA = {
+      mon: [
+        { time: "06:00", name: "heavy barbell lifting", category: "lifting", coach: "marcus vance", duration: "60 min", spotsLeft: false },
+        { time: "08:30", name: "high-output hiit", category: "hiit", coach: "elena rostova", duration: "45 min", spotsLeft: false },
+        { time: "12:00", name: "functional mobility", category: "mobility", coach: "maya chen", duration: "50 min", spotsLeft: true }, // Ember tag
+        { time: "17:30", name: "boxing conditioning", category: "boxing", coach: "devon reed", duration: "60 min", spotsLeft: false },
+        { time: "19:00", name: "open floor & strength", category: "lifting", coach: "marcus vance", duration: "75 min", spotsLeft: false }
+      ],
+      tue: [
+        { time: "06:30", name: "olympic clean & jerk", category: "lifting", coach: "elena rostova", duration: "60 min", spotsLeft: false },
+        { time: "09:00", name: "isometric core & mobility", category: "mobility", coach: "maya chen", duration: "50 min", spotsLeft: false },
+        { time: "13:00", name: "power endurance hiit", category: "hiit", coach: "elena rostova", duration: "45 min", spotsLeft: false },
+        { time: "17:00", name: "technical boxing drills", category: "boxing", coach: "devon reed", duration: "60 min", spotsLeft: true }, // Ember tag
+        { time: "18:45", name: "heavy squat focus", category: "lifting", coach: "marcus vance", duration: "75 min", spotsLeft: false }
+      ],
+      wed: [
+        { time: "06:00", name: "deadlift mechanics", category: "lifting", coach: "marcus vance", duration: "60 min", spotsLeft: true }, // Ember tag
+        { time: "08:30", name: "athletic conditioning", category: "hiit", coach: "elena rostova", duration: "50 min", spotsLeft: false },
+        { time: "12:00", name: "spine & hip mobility", category: "mobility", coach: "maya chen", duration: "45 min", spotsLeft: false },
+        { time: "17:30", name: "heavy bag conditioning", category: "boxing", coach: "devon reed", duration: "60 min", spotsLeft: false },
+        { time: "19:00", name: "open floor lifting", category: "lifting", coach: "marcus vance", duration: "75 min", spotsLeft: false }
+      ],
+      thu: [
+        { time: "06:30", name: "upper body hypertrophy", category: "lifting", coach: "marcus vance", duration: "60 min", spotsLeft: false },
+        { time: "09:00", name: "sprint interval hiit", category: "hiit", coach: "elena rostova", duration: "45 min", spotsLeft: false },
+        { time: "12:30", name: "active recovery mobility", category: "mobility", coach: "maya chen", duration: "50 min", spotsLeft: false },
+        { time: "17:00", name: "sparring & footwork", category: "boxing", coach: "devon reed", duration: "60 min", spotsLeft: true }, // Ember tag
+        { time: "18:30", name: "strength & conditioning", category: "hiit", coach: "elena rostova", duration: "75 min", spotsLeft: false }
+      ],
+      fri: [
+        { time: "06:00", name: "friday max effort lifting", category: "lifting", coach: "marcus vance", duration: "75 min", spotsLeft: false },
+        { time: "08:30", name: "tempo conditioning", category: "hiit", coach: "elena rostova", duration: "50 min", spotsLeft: false },
+        { time: "12:00", name: "joint mobility & breath", category: "mobility", coach: "maya chen", duration: "45 min", spotsLeft: false },
+        { time: "17:00", name: "fight conditioning", category: "boxing", coach: "devon reed", duration: "60 min", spotsLeft: true }, // Ember tag
+        { time: "18:30", name: "open floor club", category: "lifting", coach: "all coaches", duration: "90 min", spotsLeft: false }
+      ],
+      sat: [
+        { time: "07:30", name: "weekend team endurance", category: "hiit", coach: "elena rostova", duration: "60 min", spotsLeft: false },
+        { time: "09:00", name: "heavy compound lifting", category: "lifting", coach: "marcus vance", duration: "75 min", spotsLeft: true }, // Ember tag
+        { time: "11:00", name: "boxing fundamentals", category: "boxing", coach: "devon reed", duration: "60 min", spotsLeft: false },
+        { time: "13:00", name: "deep mobility & flow", category: "mobility", coach: "maya chen", duration: "60 min", spotsLeft: false }
+      ],
+      sun: [
+        { time: "08:30", name: "sunday barbell session", category: "lifting", coach: "marcus vance", duration: "75 min", spotsLeft: false },
+        { time: "10:30", name: "restorative movement", category: "mobility", coach: "maya chen", duration: "60 min", spotsLeft: true }, // Ember tag
+        { time: "12:30", name: "open floor training", category: "lifting", coach: "duty coach", duration: "90 min", spotsLeft: false }
+      ]
+    };
+
+    // 2. Coaches & Trainers
+    const COACHES_DATA = [
+      {
+        name: "marcus vance",
+        specialty: "head coach / heavy lifting",
+        experience: "12 years experience",
+        bio: "former competitive powerlifter focused on raw compound barbell strength and biomechanics.",
+        image: "coach_marcus.jpg",
+        initials: "mv"
+      },
+      {
+        name: "elena rostova",
+        specialty: "olympic lifting & hiit",
+        experience: "9 years experience",
+        bio: "master of explosive bar path, conditioning stamina, and athletic work capacity.",
+        image: "coach_elena.jpg",
+        initials: "er"
+      },
+      {
+        name: "devon reed",
+        specialty: "boxing conditioning",
+        experience: "14 years experience",
+        bio: "championship boxing coach combining ring-proven footwork with high-density cardio output.",
+        image: "coach_devon.jpg",
+        initials: "dr"
+      },
+      {
+        name: "maya chen",
+        specialty: "mobility & functional flow",
+        experience: "8 years experience",
+        bio: "sports kinesiologist dedicated to joint longevity, deep active mobility, and pain-free lifting.",
+        image: "coach_maya.jpg",
+        initials: "mc"
+      }
+    ];
+
+    // 3. Membership Plans
+    const PLANS_DATA = [
+      {
+        id: "basic",
+        name: "basic",
+        monthlyPrice: 1500,
+        yearlyPrice: 1275, // 15% off
+        popular: false,
+        features: [
+          "full gym floor access (5am — midnight)",
+          "standard locker & sauna access",
+          "ironwork digital workout logger",
+          "1 quarterly movement screen",
+          "discount on club seminars"
+        ]
+      },
+      {
+        id: "performance",
+        name: "performance",
+        monthlyPrice: 2500,
+        yearlyPrice: 2125, // 15% off
+        popular: true, // Marked with ember tag
+        features: [
+          "unlimited access to all 5 weekly classes",
+          "custom monthly strength programming",
+          "full facility & recovery zone access",
+          "bi-weekly coach check-ins",
+          "guest pass (2 per month)",
+          "complimentary towel service"
+        ]
+      },
+      {
+        id: "elite",
+        name: "elite",
+        monthlyPrice: 4000,
+        yearlyPrice: 3400, // 15% off
+        popular: false,
+        features: [
+          "1-on-1 private coaching (2 sessions/mo)",
+          "unlimited classes & open gym 7 days",
+          "personalized nutrition & macro audit",
+          "dedicated locker & laundry service",
+          "priority booking for limited sessions",
+          "full recovery lab & cold plunge suite"
+        ]
+      }
+    ];
+
+    // 4. Member Results (Testimonials)
+    const RESULTS_DATA = [
+      {
+        quote: "the coaching standards here are unmatched. lost 14 kg in 6 months while adding 40 kg to my deadlift.",
+        name: "daniel k.",
+        result: "lost 14 kg in 6 months"
+      },
+      {
+        quote: "no ego, just relentless discipline. my chronic back pain disappeared after 8 weeks of proper coaching.",
+        name: "sarah m.",
+        result: "rehabilitated lower back & squatting pain-free"
+      },
+      {
+        quote: "the environment forces you to elevate. i increased my powerlifting total by 65 kg in under one year.",
+        name: "vikram r.",
+        result: "added 65 kg to powerlifting total"
+      },
+      {
+        quote: "started at zero athletic conditioning. six months in, i can run 10k and hit compound sets without gassing.",
+        name: "clara s.",
+        result: "shaved 18 min off 10k & dropped 11% body fat"
+      },
+      {
+        quote: "ironwork became the anchor of my daily routine. best investment i have ever made in my physical capability.",
+        name: "julian b.",
+        result: "body recomp + gained 6 kg lean muscle"
+      }
+    ];
+
+    // 5. Operating Hours
+    const HOURS_DATA = [
+      { dayIndexRange: [1, 2, 3, 4, 5], label: "mon–fri", hours: "5am — midnight", openHour: 5, closeHour: 24 },
+      { dayIndexRange: [6], label: "sat", hours: "6am — 10pm", openHour: 6, closeHour: 22 },
+      { dayIndexRange: [0], label: "sun", hours: "7am — 8pm", openHour: 7, closeHour: 20 }
+    ];
+
+    /* ==========================================================================
+       HERO CURSOR SPOTLIGHT INTERACTION (EXACT IMPLEMENTATION)
+       ========================================================================== */
+    (function initHeroSpotlight() {
+      const hero = document.getElementById('hero');
+      const revealLayer = document.getElementById('power-reveal');
+      if (!hero || !revealLayer) return;
+
+      const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (!isDesktop) return; // Touch devices show static state
+
+      let targetX = 0;
+      let targetY = 0;
+      let currentX = 0;
+      let currentY = 0;
+      let isFirstMove = true;
+      let rafId = null;
+
+      function updateSpotlight() {
+        const dx = targetX - currentX;
+        const dy = targetY - currentY;
+        const delta = Math.hypot(dx, dy);
+
+        if (delta < 0.3) {
+          currentX = targetX;
+          currentY = targetY;
+          setMask(currentX, currentY);
+          rafId = null;
+          return;
+        }
+
+        currentX += dx * 0.22;
+        currentY += dy * 0.22;
+        setMask(currentX, currentY);
+
+        rafId = requestAnimationFrame(updateSpotlight);
+      }
+
+      function setMask(x, y) {
+        const posX = Math.round(x - 55);
+        const posY = Math.round(y - 70);
+        revealLayer.style.maskPosition = `${posX}px ${posY}px`;
+        revealLayer.style.webkitMaskPosition = `${posX}px ${posY}px`;
+      }
+
+      hero.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        targetX = x;
+        targetY = y;
+
+        if (isFirstMove) {
+          currentX = x;
+          currentY = y;
+          setMask(x, y);
+          revealLayer.style.opacity = '1';
+          isFirstMove = false;
+          return;
+        }
+
+        revealLayer.style.opacity = '1';
+
+        if (rafId === null) {
+          rafId = requestAnimationFrame(updateSpotlight);
+        }
+      });
+
+      hero.addEventListener('mouseleave', () => {
+        revealLayer.style.opacity = '0';
+        isFirstMove = true;
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      });
+    })();
+
+    /* ==========================================================================
+       PERSISTENT FLOATING HEADER & SCROLLSPY CONTROLLER
+       ========================================================================== */
+    (function initFloatingHeader() {
+      const header = document.getElementById('floating-header');
+      if (!header) return;
+
+      const navLinks = header.querySelectorAll('.float-nav-link');
+      const sections = ['classes', 'trainers', 'pricing', 'contact'].map(id => document.getElementById(id));
+
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        // Show after scrolling past 80% of hero
+        if (scrollY > window.innerHeight * 0.8) {
+          header.classList.add('visible');
+        } else {
+          header.classList.remove('visible');
+        }
+
+        // Scrollspy highlight
+        let currentSectionId = '';
+        sections.forEach(sec => {
+          if (sec) {
+            const top = sec.offsetTop - 120;
+            const height = sec.offsetHeight;
+            if (scrollY >= top && scrollY < top + height) {
+              currentSectionId = sec.id;
+            }
+          }
+        });
+
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href === '#' + currentSectionId) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }, { passive: true });
+    })();
+
+    /* ==========================================================================
+       MOBILE FULLSCREEN MENU CONTROLLER
+       ========================================================================== */
+    (function initMobileMenu() {
+      const openBtn = document.getElementById('mobile-menu-trigger');
+      const closeBtn = document.getElementById('mobile-close-trigger');
+      const overlay = document.getElementById('mobile-nav-overlay');
+      if (!openBtn || !closeBtn || !overlay) return;
+
+      function openMenu() {
+        overlay.classList.add('active');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMenu() {
+        overlay.classList.remove('active');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      openBtn.addEventListener('click', openMenu);
+      closeBtn.addEventListener('click', closeMenu);
+
+      overlay.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Escape key closes mobile menu
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) {
+          closeMenu();
+        }
+      });
+    })();
+
+    /* ==========================================================================
+       SECTION 2: CLASSES & SCHEDULE CONTROLLER (WITH CATEGORY FILTERS & USER-FRIENDLY PREFILL)
+       ========================================================================== */
+    (function initSchedule() {
+      const tabsContainer = document.getElementById('schedule-tabs');
+      const rowsContainer = document.getElementById('schedule-rows');
+      const filtersContainer = document.getElementById('class-category-filters');
+      if (!tabsContainer || !rowsContainer) return;
+
+      const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+      const dayMap = [6, 0, 1, 2, 3, 4, 5]; // Date.getDay(): 0 is sun -> index 6
+      const currentDayIndex = dayMap[new Date().getDay()];
+      const todayCode = days[currentDayIndex];
+
+      let activeDay = todayCode || 'mon';
+      let activeCategory = 'all';
+
+      // Render Tabs with "today" badge
+      tabsContainer.innerHTML = days.map(day => `
+        <button class="tab-btn ${day === activeDay ? 'active' : ''}" data-day="${day}">
+          ${day}
+          ${day === todayCode ? '<span class="today-tag">today</span>' : ''}
+        </button>
+      `).join('');
+
+      function renderSchedule() {
+        const classes = SCHEDULE_DATA[activeDay] || [];
+        const filtered = activeCategory === 'all'
+          ? classes
+          : classes.filter(c => c.category === activeCategory);
+
+        if (filtered.length === 0) {
+          rowsContainer.innerHTML = `
+            <div style="padding: 40px 0; color: var(--text-muted); font-size: 16px;">
+              no classes scheduled under this category for ${activeDay}.
+            </div>
+          `;
+          return;
+        }
+
+        rowsContainer.innerHTML = filtered.map(cls => `
+          <div class="schedule-row">
+            <div class="class-time">${cls.time}</div>
+            <div class="class-name-wrap">
+              <span class="class-name">${cls.name}</span>
+              ${cls.spotsLeft ? '<span class="spot-tag">few spots left</span>' : ''}
+            </div>
+            <div class="class-coach">${cls.coach}</div>
+            <div class="class-duration">${cls.duration}</div>
+            <a href="#contact" class="class-book-btn" data-book-class="${cls.name}" data-book-time="${cls.time} on ${activeDay}">
+              book ↗
+            </a>
+          </div>
+        `).join('');
+
+        // Wire up clicking "book" to prefill intent card and goal in trial form
+        rowsContainer.querySelectorAll('.class-book-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const className = btn.getAttribute('data-book-class');
+            const classTime = btn.getAttribute('data-book-time');
+            setReservationIntent(`class: ${className} (${classTime})`);
+
+            const goalSelect = document.getElementById('trial-goal');
+            if (goalSelect) {
+              if (className.includes('lifting') || className.includes('squat') || className.includes('deadlift')) {
+                goalSelect.value = 'build strength';
+              } else if (className.includes('hiit') || className.includes('conditioning')) {
+                goalSelect.value = 'improve fitness';
+              } else if (className.includes('boxing')) {
+                goalSelect.value = 'sports performance';
+              } else {
+                goalSelect.value = 'build strength';
+              }
+            }
+          });
+        });
+      }
+
+      tabsContainer.addEventListener('click', (e) => {
+        const target = e.target.closest('.tab-btn');
+        if (!target) return;
+        tabsContainer.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        target.classList.add('active');
+        activeDay = target.getAttribute('data-day');
+        renderSchedule();
+      });
+
+      if (filtersContainer) {
+        filtersContainer.addEventListener('click', (e) => {
+          const target = e.target.closest('.category-filter-btn');
+          if (!target) return;
+          filtersContainer.querySelectorAll('.category-filter-btn').forEach(b => b.classList.remove('active'));
+          target.classList.add('active');
+          activeCategory = target.getAttribute('data-filter');
+          renderSchedule();
+        });
+      }
+
+      renderSchedule();
+    })();
+
+    /* ==========================================================================
+       SECTION 3: TRAINERS CONTROLLER (WITH TOUCH EXPAND SUPPORT)
+       ========================================================================== */
+    (function initTrainers() {
+      const container = document.getElementById('trainers-grid');
+      if (!container) return;
+
+      container.innerHTML = COACHES_DATA.map(coach => `
+        <article class="trainer-card" tabindex="0" aria-label="Coach ${coach.name}">
+          <div class="trainer-image-wrap">
+            <img
+              src="${coach.image}"
+              alt="${coach.name}"
+              class="trainer-image"
+              loading="lazy"
+              onerror="this.style.display='none'; this.nextElementSibling.style.opacity='0.6';"
+            >
+            <div class="trainer-placeholder-initials" aria-hidden="true">${coach.initials}</div>
+          </div>
+          <div class="trainer-meta">
+            <h3 class="trainer-name">${coach.name}</h3>
+            <p class="trainer-spec">${coach.specialty}</p>
+            <p class="trainer-exp">${coach.experience}</p>
+            <p class="trainer-bio">${coach.bio}</p>
+          </div>
+        </article>
+      `).join('');
+
+      // Touch device toggle support
+      container.querySelectorAll('.trainer-card').forEach(card => {
+        card.addEventListener('click', () => {
+          card.classList.toggle('touch-active');
+        });
+      });
+    })();
+
+    /* ==========================================================================
+       SECTION 4: MEMBERSHIP PLANS CONTROLLER (WITH INSTANT FEEDBACK)
+       ========================================================================== */
+    (function initPricing() {
+      const container = document.getElementById('pricing-grid');
+      const btnMonthly = document.getElementById('toggle-monthly');
+      const btnYearly = document.getElementById('toggle-yearly');
+      if (!container || !btnMonthly || !btnYearly) return;
+
+      let isYearly = false;
+
+      function renderPlans() {
+        container.innerHTML = PLANS_DATA.map(plan => {
+          const price = isYearly ? plan.yearlyPrice : plan.monthlyPrice;
+          const billingNote = isYearly ? 'billed annually (-15% discount)' : 'billed monthly (cancel anytime)';
+
+          return `
+            <div class="plan-column">
+              <div class="plan-title-row">
+                <h3 class="plan-name">${plan.name}</h3>
+                ${plan.popular ? '<span class="popular-tag">popular</span>' : ''}
+              </div>
+
+              <div class="plan-price-wrap">
+                <span class="plan-price">$${price}</span>
+                <span class="plan-price-period">/ mo</span>
+              </div>
+              <p class="plan-billing-note">${billingNote}</p>
+
+              <ul class="plan-features-list">
+                ${plan.features.map(f => `
+                  <li class="plan-feature-item">
+                    <span class="plan-feature-bullet"></span>
+                    <span>${f}</span>
+                  </li>
+                `).join('')}
+              </ul>
+
+              <a href="#contact" class="plan-btn" data-plan-id="${plan.id}" data-plan-name="${plan.name}" data-plan-price="$${price}/mo">
+                choose ${plan.name} ↗
+              </a>
+            </div>
+          `;
+        }).join('');
+
+        // Wire up "choose plan" buttons to scroll and prefill plan select + intent card
+        container.querySelectorAll('.plan-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const planId = btn.getAttribute('data-plan-id');
+            const planName = btn.getAttribute('data-plan-name');
+            const planPrice = btn.getAttribute('data-plan-price');
+
+            setReservationIntent(`membership plan: ${planName} (${planPrice})`);
+
+            const planSelect = document.getElementById('trial-plan');
+            if (planSelect) {
+              planSelect.value = planId;
+            }
+          });
+        });
+      }
+
+      btnMonthly.addEventListener('click', () => {
+        isYearly = false;
+        btnMonthly.classList.add('active');
+        btnMonthly.setAttribute('aria-pressed', 'true');
+        btnYearly.classList.remove('active');
+        btnYearly.setAttribute('aria-pressed', 'false');
+        renderPlans();
+      });
+
+      btnYearly.addEventListener('click', () => {
+        isYearly = true;
+        btnYearly.classList.add('active');
+        btnYearly.setAttribute('aria-pressed', 'true');
+        btnMonthly.classList.remove('active');
+        btnMonthly.setAttribute('aria-pressed', 'false');
+        renderPlans();
+      });
+
+      renderPlans();
+    })();
+
+    /* ==========================================================================
+       SECTION 5: MEMBER RESULTS (CAROUSEL & DOTS & DRAG/SWIPE CONTROLLER)
+       ========================================================================== */
+    (function initResultsCarousel() {
+      const carousel = document.getElementById('results-carousel');
+      const prevBtn = document.getElementById('results-prev');
+      const nextBtn = document.getElementById('results-next');
+      const indicator = document.getElementById('carousel-indicator');
+      const dotsContainer = document.getElementById('carousel-dots');
+      if (!carousel || !prevBtn || !nextBtn) return;
+
+      carousel.innerHTML = RESULTS_DATA.map(item => `
+        <div class="quote-card">
+          <p class="quote-text">"${item.quote}"</p>
+          <div class="quote-meta">
+            <span class="quote-name">${item.name}</span>
+            <span class="quote-result">${item.result}</span>
+          </div>
+        </div>
+      `).join('');
+
+      if (dotsContainer) {
+        dotsContainer.innerHTML = RESULTS_DATA.map((_, i) => `
+          <button class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}" aria-label="Quote ${i + 1}"></button>
+        `).join('');
+      }
+
+      function updateActiveIndicator() {
+        const cardWidth = 452; // 420px + 32px gap
+        const activeIdx = Math.min(
+          RESULTS_DATA.length - 1,
+          Math.max(0, Math.round(carousel.scrollLeft / cardWidth))
+        );
+
+        if (indicator) {
+          indicator.textContent = `0${activeIdx + 1} / 0${RESULTS_DATA.length}`;
+        }
+
+        if (dotsContainer) {
+          dotsContainer.querySelectorAll('.carousel-dot').forEach((dot, idx) => {
+            dot.classList.toggle('active', idx === activeIdx);
+          });
+        }
+      }
+
+      carousel.addEventListener('scroll', updateActiveIndicator, { passive: true });
+
+      prevBtn.addEventListener('click', () => {
+        carousel.scrollBy({ left: -452, behavior: 'smooth' });
+      });
+
+      nextBtn.addEventListener('click', () => {
+        carousel.scrollBy({ left: 452, behavior: 'smooth' });
+      });
+
+      if (dotsContainer) {
+        dotsContainer.addEventListener('click', (e) => {
+          const dot = e.target.closest('.carousel-dot');
+          if (!dot) return;
+          const idx = parseInt(dot.getAttribute('data-index'), 10);
+          carousel.scrollTo({ left: idx * 452, behavior: 'smooth' });
+        });
+      }
+
+      // Mouse Drag & Touch Swipe support
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      carousel.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX - carousel.offsetLeft;
+        scrollLeft = carousel.scrollLeft;
+      });
+
+      carousel.addEventListener('mouseleave', () => {
+        isDown = false;
+      });
+
+      carousel.addEventListener('mouseup', () => {
+        isDown = false;
+      });
+
+      carousel.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - carousel.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        carousel.scrollLeft = scrollLeft - walk;
+      });
+    })();
+
+    /* ==========================================================================
+       SECTION 6: FREE TRIAL FORM CONTROLLER (USER INTENT, LIVE VALIDATION, WHATSAPP)
+       ========================================================================== */
+    function setReservationIntent(text) {
+      const card = document.getElementById('selected-intent-card');
+      const val = document.getElementById('intent-val');
+      if (card && val) {
+        val.textContent = text;
+        card.classList.add('visible');
+      }
+    }
+
+    (function initTrialForm() {
+      const form = document.getElementById('trial-form');
+      const confirmation = document.getElementById('trial-confirmation');
+      const intentCard = document.getElementById('selected-intent-card');
+      const intentClearBtn = document.getElementById('intent-clear-btn');
+      if (!form || !confirmation) return;
+
+      const nameInput = document.getElementById('trial-name');
+      const phoneInput = document.getElementById('trial-phone');
+      const emailInput = document.getElementById('trial-email');
+      const nameError = document.getElementById('name-error');
+      const phoneError = document.getElementById('phone-error');
+      const emailError = document.getElementById('email-error');
+      const submitBtn = document.getElementById('btn-submit-trial');
+
+      if (intentClearBtn && intentCard) {
+        intentClearBtn.addEventListener('click', () => {
+          intentCard.classList.remove('visible');
+          document.getElementById('trial-goal').value = 'build strength';
+          document.getElementById('trial-plan').value = 'not decided';
+        });
+      }
+
+      // Live phone number cleanup & formatting
+      phoneInput.addEventListener('input', (e) => {
+        phoneError.textContent = '';
+        const digits = e.target.value.replace(/\D/g, '');
+        if (digits.length <= 10) {
+          if (digits.length > 6) {
+            e.target.value = `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+          } else if (digits.length > 3) {
+            e.target.value = `${digits.slice(0, 3)}-${digits.slice(3)}`;
+          } else {
+            e.target.value = digits;
+          }
+        }
+      });
+
+      nameInput.addEventListener('input', () => {
+        nameError.textContent = '';
+      });
+
+      emailInput.addEventListener('input', () => {
+        emailError.textContent = '';
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // 1. Spam honeypot check
+        const hp = form.elements['hp_field'].value;
+        if (hp) {
+          console.warn('Spam submission prevented.');
+          return;
+        }
+
+        let isValid = true;
+        nameError.textContent = '';
+        phoneError.textContent = '';
+        emailError.textContent = '';
+
+        // Name validation (required, >= 2 chars)
+        const nameVal = nameInput.value.trim();
+        if (nameVal.length < 2) {
+          nameError.textContent = 'please enter your full name';
+          isValid = false;
+        }
+
+        // Phone validation (10 digits)
+        const phoneClean = phoneInput.value.replace(/\D/g, '');
+        if (phoneClean.length !== 10) {
+          phoneError.textContent = 'please enter a valid 10-digit phone number';
+          isValid = false;
+        }
+
+        // Email validation (optional, valid email if provided)
+        const emailVal = emailInput.value.trim();
+        if (emailVal) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(emailVal)) {
+            emailError.textContent = 'please enter a valid email address';
+            isValid = false;
+          }
+        }
+
+        if (!isValid) return;
+
+        // Button submitting state
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'submitting reservation...';
+
+        const payload = {
+          fullName: nameVal,
+          phone: phoneClean,
+          email: emailVal || null,
+          goal: form.elements['goal'].value,
+          time: form.elements['time'].value,
+          plan: form.elements['plan'].value,
+          intentNote: document.getElementById('intent-val')?.textContent || null,
+          submittedAt: new Date().toISOString()
+        };
+
+        // Log payload to console
+        console.log('Free Trial Request Payload:', payload);
+
+        // TODO: connect your API endpoint here
+        // Example:
+        // fetch('/api/trial', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify(payload)
+        // }).then(res => res.json()).catch(console.error);
+
+        // WhatsApp integration hook:
+        // const waUrl = `https://wa.me/15550192834?text=${encodeURIComponent('Hi Ironwork, I just requested a free trial under name: ' + nameVal)}`;
+        // window.open(waUrl, '_blank');
+
+        setTimeout(() => {
+          form.style.display = 'none';
+          if (intentCard) intentCard.style.display = 'none';
+
+          confirmation.innerHTML = `
+            <div style="font-size: 14px; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 8px;">
+              reservation confirmed • reference #IW-${Math.floor(1000 + Math.random() * 9000)}
+            </div>
+            <div>thanks, ${nameVal.toLowerCase()}. we'll call you within 24 hours.</div>
+            <p style="font-size: 15px; color: var(--text-muted); margin-top: 14px; font-weight: 400;">
+              a coach has been assigned to your initial screening session.
+            </p>
+          `;
+          confirmation.style.display = 'block';
+        }, 350);
+      });
+    })();
+
+    /* ==========================================================================
+       SECTION 7: LOCATION & HOURS (LIVE STATUS & ONE-CLICK ADDRESS COPY)
+       ========================================================================== */
+    (function initHoursAndStatus() {
+      const listContainer = document.getElementById('hours-list');
+      const statusPill = document.getElementById('live-status-pill');
+      const statusText = document.getElementById('status-text');
+      const copyBtn = document.getElementById('copy-address-btn');
+      const addressText = document.getElementById('gym-address-text');
+      if (!listContainer || !statusPill) return;
+
+      const now = new Date();
+      const currentDay = now.getDay(); // 0 is Sunday, 1 is Monday ... 6 is Saturday
+      const currentHour = now.getHours();
+
+      // Render hours rows and highlight today
+      listContainer.innerHTML = HOURS_DATA.map(schedule => {
+        const isToday = schedule.dayIndexRange.includes(currentDay);
+        return `
+          <div class="hours-row ${isToday ? 'today' : ''}">
+            <span>${schedule.label} ${isToday ? '(today)' : ''}</span>
+            <span>${schedule.hours}</span>
+          </div>
+        `;
+      }).join('');
+
+      // Determine open/closed status
+      const todaySchedule = HOURS_DATA.find(s => s.dayIndexRange.includes(currentDay));
+      let isOpen = false;
+
+      if (todaySchedule) {
+        if (currentHour >= todaySchedule.openHour && currentHour < todaySchedule.closeHour) {
+          isOpen = true;
+        }
+      }
+
+      if (isOpen) {
+        if (statusText) statusText.textContent = 'open now';
+        statusPill.className = 'status-pill open';
+      } else {
+        if (statusText) statusText.textContent = 'closed';
+        statusPill.className = 'status-pill closed';
+      }
+
+      // One-click copy address
+      if (copyBtn && addressText) {
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(addressText.textContent).then(() => {
+            copyBtn.textContent = 'copied! ✓';
+            setTimeout(() => {
+              copyBtn.textContent = 'copy';
+            }, 2000);
+          }).catch(() => {
+            copyBtn.textContent = 'copied';
+          });
+        });
+      }
+    })();
+
+    /* ==========================================================================
+       SCROLL-REVEAL OBSERVER (NEW SECTIONS ONLY)
+       ========================================================================== */
+    (function initScrollReveal() {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+
+      const groups = document.querySelectorAll('.reveal-group');
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const items = entry.target.querySelectorAll('.reveal-item');
+            items.forEach((item, index) => {
+              setTimeout(() => {
+                item.classList.add('revealed');
+              }, index * 80); // Staggered 80ms per child
+            });
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      groups.forEach(group => observer.observe(group));
+    })();
+  </script>
+</body>
+</html>
